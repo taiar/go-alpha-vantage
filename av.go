@@ -183,6 +183,7 @@ func (c *Client) SymbolSearch(keywords string) (*SymbolMatches, error) {
 	json.Unmarshal(body, &matches)
 
 	return matches, nil
+}
 
 // StockQuote is a lightweight alternative to the time series APIs, this service returns the latest price and volume
 // information for a security of your choice.
