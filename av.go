@@ -183,4 +183,18 @@ func (c *Client) SymbolSearch(keywords string) (*SymbolMatches, error) {
 	json.Unmarshal(body, &matches)
 
 	return matches, nil
+
+// StockQuote is a lightweight alternative to the time series APIs, this service returns the latest price and volume
+// information for a security of your choice.
+func (c *Client) StockQuote(symbol string) (*QuoteValue, error) {
+	endpoint := c.buildRequestPath(map[string]string{
+		queryEndpoint: GlobalQuote,
+		querySymbol:   symbol,
+	})
+	response, err := c.conn.Request(endpoint)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+	return parseQuoteData(response.Body)
 }
